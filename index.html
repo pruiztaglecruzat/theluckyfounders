@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Lucky Founders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:           #0D0B09;
+    --bg-2:         #131008;
+    --bg-card:      #181410;
+    --bg-card-2:    #1F1B16;
+    --border:       rgba(255,255,255,0.06);
+    --border-hover: rgba(210,115,65,0.4);
+    --terra:        #D97845;
+    --terra-light:  #E8966A;
+    --terra-dark:   #B05A2E;
+    --terra-dim:    rgba(217,120,69,0.12);
+    --gold:         #C4A25A;
+    --gold-light:   #D9BC7A;
+    --text-1:       #EAE4DC;
+    --text-2:       #9A9088;
+    --text-3:       #5C554E;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text-1);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(13,11,9,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Lora', serif; font-weight: 500; font-size: 1.05rem;
+    color: var(--text-1); text-decoration: none; letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--terra); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 400; color: var(--text-2);
+    text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--terra); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    position: relative; overflow: hidden; padding: 9rem 3rem 6rem;
+  }
+  .hero-glow-1 {
+    position: absolute; width: 650px; height: 650px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(217,120,69,0.08) 0%, transparent 70%);
+    top: -120px; right: -80px; pointer-events: none;
+  }
+  .hero-glow-2 {
+    position: absolute; width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,162,90,0.05) 0%, transparent 70%);
+    bottom: 40px; left: -80px; pointer-events: none;
+  }
+  .hero-bg-letter {
+    position: absolute; right: -30px; top: 50%; transform: translateY(-55%);
+    font-family: 'Lora', serif; font-size: 30vw; font-weight: 600; font-style: italic;
+    color: rgba(255,255,255,0.016); line-height: 1; pointer-events: none; user-select: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 760px; }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    font-size: 0.74rem; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--terra); margin-bottom: 2.2rem;
+    opacity: 0; animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+  .hero-eyebrow::before { content: ''; width: 26px; height: 1px; background: var(--terra); }
+
+  h1.hero-headline {
+    font-family: 'Lora', serif;
+    font-size: clamp(3rem, 6.5vw, 5.6rem);
+    font-weight: 500; line-height: 1.07; letter-spacing: -0.02em;
+    color: var(--text-1); margin-bottom: 2.8rem;
+    opacity: 0; animation: fadeUp 0.9s ease forwards 0.4s;
+  }
+  h1.hero-headline em { font-style: italic; color: var(--terra); }
+
+  .hero-quote {
+    border-left: 1.5px solid var(--gold); padding-left: 1.4rem; margin-bottom: 3.2rem;
+    opacity: 0; animation: fadeUp 0.9s ease forwards 0.65s;
+  }
+  .hero-quote p {
+    font-family: 'Lora', serif; font-size: 1.18rem; font-style: italic;
+    color: var(--text-2); line-height: 1.65; margin-bottom: 0.5rem;
+  }
+  .hero-quote cite {
+    font-size: 0.76rem; font-style: normal; font-weight: 500;
+    color: var(--text-3); letter-spacing: 0.09em; text-transform: uppercase;
+  }
+
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.9s ease forwards 0.85s;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.85rem 2rem; background: var(--terra); color: #fff;
+    font-size: 0.87rem; font-weight: 500; letter-spacing: 0.03em;
+    text-decoration: none; border-radius: 2px; transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--terra-dark); transform: translateY(-1px); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.85rem 2rem; background: transparent; color: var(--text-2);
+    font-size: 0.87rem; font-weight: 400; letter-spacing: 0.03em;
+    text-decoration: none; border: 1px solid var(--border); border-radius: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--terra); color: var(--terra); }
+
+  /* SECTIONS */
+  section { padding: 7rem 3rem; }
+  .section-label {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--terra);
+    display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.2rem;
+  }
+  .section-label::before { content: ''; width: 20px; height: 1px; background: var(--terra); }
+  .section-title {
+    font-family: 'Lora', serif; font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 500; line-height: 1.2; letter-spacing: -0.01em;
+    color: var(--text-1); margin-bottom: 1.4rem;
+  }
+  .section-subtitle {
+    font-size: 1rem; font-weight: 300; color: var(--text-2);
+    line-height: 1.8; max-width: 580px;
+  }
+
+  /* ABOUT */
+  #about { background: var(--bg-2); }
+  .about-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+  .values-list { list-style: none; margin-top: 2rem; display: flex; flex-direction: column; gap: 1.1rem; }
+  .values-list li {
+    display: flex; align-items: flex-start; gap: 0.85rem;
+    font-size: 0.93rem; color: var(--text-2); line-height: 1.7;
+  }
+  .values-list li::before { content: '→'; color: var(--terra); flex-shrink: 0; margin-top: 2px; }
+
+  .about-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 4px; padding: 2.8rem; position: relative; overflow: hidden;
+  }
+  .about-card::before {
+    content: '\201C'; font-family: 'Lora', serif; font-size: 9rem; line-height: 1;
+    color: rgba(196,162,90,0.06); position: absolute; top: 0; left: 1.5rem; pointer-events: none;
+  }
+  .about-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--terra) 0%, transparent 100%);
+  }
+  .stat { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 2rem; }
+  .stat:last-child { margin-bottom: 0; }
+  .stat-num { font-family: 'Lora', serif; font-size: 2.8rem; font-weight: 600; color: var(--terra); line-height: 1; }
+  .stat-label { font-size: 0.82rem; color: var(--text-3); letter-spacing: 0.04em; }
+  .stat-div { width: 36px; height: 1px; background: var(--border); margin: 1.5rem 0; }
+
+  /* PORTFOLIO */
+  #portfolio { background: var(--bg); }
+  .portfolio-inner { max-width: 1100px; margin: 0 auto; }
+  .portfolio-header { margin-bottom: 3.5rem; }
+
+  .portfolio-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+  }
+  .p-card {
+    background: var(--bg-card); padding: 2.2rem;
+    position: relative; overflow: hidden; transition: background 0.25s;
+  }
+  .p-card:hover { background: var(--bg-card-2); }
+  .p-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1.5px;
+    background: var(--terra); transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .p-card:hover::after { transform: scaleX(1); }
+
+  .p-tag {
+    display: inline-block; font-size: 0.67rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--terra); background: var(--terra-dim);
+    padding: 0.27rem 0.65rem; border-radius: 2px; margin-bottom: 1.1rem;
+  }
+  .p-name { font-family: 'Lora', serif; font-size: 1.42rem; font-weight: 500; color: var(--text-1); margin-bottom: 0.75rem; }
+  .p-desc { font-size: 0.87rem; font-weight: 300; color: var(--text-2); line-height: 1.75; margin-bottom: 1.5rem; }
+  .p-status { display: flex; align-items: center; gap: 0.5rem; font-size: 0.77rem; color: var(--text-3); }
+  .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--text-3); flex-shrink: 0; }
+  .dot.on  { background: #6BAE75; box-shadow: 0 0 6px rgba(107,174,117,0.35); }
+  .dot.bld { background: var(--terra); box-shadow: 0 0 6px rgba(217,120,69,0.35); }
+
+  .p-card.empty {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: transparent; min-height: 220px; gap: 0.75rem;
+  }
+  .p-card.empty::after { display: none; }
+  .p-card.empty .plus {
+    width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; color: var(--text-3); line-height: 1;
+  }
+  .p-card.empty p { font-size: 0.82rem; color: var(--text-3); text-align: center; line-height: 1.6; }
+
+  /* TEAM */
+  #team { background: var(--bg-2); }
+  .team-inner { max-width: 1100px; margin: 0 auto; }
+  .team-header { margin-bottom: 3.5rem; }
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 5rem; }
+
+  .t-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: 4px; padding: 2rem; transition: border-color 0.25s, background 0.25s;
+  }
+  .t-card:hover { background: var(--bg-card-2); border-color: var(--border-hover); }
+  .t-avatar {
+    width: 50px; height: 50px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--terra-dark) 0%, var(--terra-light) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Lora', serif; font-size: 1.2rem; color: #fff; margin-bottom: 1.2rem;
+  }
+  .t-name { font-family: 'Lora', serif; font-size: 1.1rem; font-weight: 500; color: var(--text-1); margin-bottom: 0.3rem; }
+  .t-role { font-size: 0.74rem; font-weight: 500; color: var(--terra); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 1rem; }
+  .t-bio { font-size: 0.87rem; font-weight: 300; color: var(--text-2); line-height: 1.75; }
+
+  .t-card.empty {
+    border-style: dashed; background: transparent; opacity: 0.38;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 180px; gap: 0.6rem;
+  }
+  .t-card.empty:hover { opacity: 0.55; background: transparent; border-color: var(--border); }
+  .t-card.empty .plus {
+    width: 34px; height: 34px; border-radius: 50%; border: 1px dashed var(--border);
+    display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--text-3);
+  }
+  .t-card.empty p { font-size: 0.8rem; color: var(--text-3); text-align: center; }
+
+  .manifesto { border-top: 1px solid var(--border); padding-top: 4rem; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: end; }
+  .manifesto-q { font-family: 'Lora', serif; font-size: clamp(1.5rem, 2.8vw, 2.2rem); font-style: italic; color: var(--gold-light); line-height: 1.5; }
+  .manifesto-cite { font-size: 0.74rem; font-weight: 500; color: var(--text-3); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; padding-bottom: 0.35rem; }
+
+  /* FOOTER */
+  footer {
+    background: #070504; padding: 2.5rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1.5rem; border-top: 1px solid var(--border);
+  }
+  .footer-logo { font-family: 'Lora', serif; font-size: 1rem; color: var(--text-2); }
+  .footer-logo span { color: var(--terra); }
+  .footer-copy { font-size: 0.77rem; color: var(--text-3); letter-spacing: 0.04em; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { font-size: 0.77rem; color: var(--text-3); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--terra); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 5rem 1.5rem; }
+    .hero { padding: 8rem 1.5rem 5rem; }
+    .about-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: 1fr; }
+    .manifesto { grid-template-columns: 1fr; }
+    footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">The <span>Lucky</span> Founders</a>
+  <ul class="nav-links">
+    <li><a href="#about">Studio</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#team">Founders</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow-1"></div>
+  <div class="hero-glow-2"></div>
+  <div class="hero-bg-letter">L</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Venture Studio · Santiago, Chile</div>
+    <h1 class="hero-headline">We don't wait<br>for <em>luck</em>.<br>We build it.</h1>
+    <div class="hero-quote">
+      <p>"The more I practice,<br>the luckier I get."</p>
+      <cite>— Gary Player</cite>
+    </div>
+    <div class="hero-cta">
+      <a href="#portfolio" class="btn-primary">See our companies →</a>
+      <a href="#about" class="btn-ghost">Our story</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="about-inner">
+    <div>
+      <div class="section-label reveal">The Studio</div>
+      <h2 class="section-title reveal">A different kind<br>of company builder.</h2>
+      <p class="section-subtitle reveal">The Lucky Founders is a venture studio based in Chile. We build, fund, and operate technology companies from zero — with deep involvement in product, tech, and go-to-market.</p>
+      <ul class="values-list reveal">
+        <li>We build companies we'd use ourselves, in markets we know deeply.</li>
+        <li>We stay operational. Founders run their companies — we run alongside them.</li>
+        <li>Luck is the residue of relentless repetition. We repeat until it compounds.</li>
+      </ul>
+    </div>
+    <div class="about-card reveal">
+      <div class="stat">
+        <span class="stat-num">5+</span>
+        <span class="stat-label">Companies built &amp; operating</span>
+      </div>
+      <div class="stat-div"></div>
+      <div class="stat">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Active verticals</span>
+      </div>
+      <div class="stat-div"></div>
+      <div class="stat">
+        <span class="stat-num">1</span>
+        <span class="stat-label">Listed company (ScaleX)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="portfolio-inner">
+    <div class="portfolio-header">
+      <div class="section-label reveal">Portfolio</div>
+      <h2 class="section-title reveal">Companies we've built.</h2>
+      <p class="section-subtitle reveal">From proptech to fintech to AI — each company solves a real problem in LatAm.</p>
+    </div>
+    <div class="portfolio-grid reveal">
+      <div class="p-card">
+        <span class="p-tag">Proptech</span>
+        <div class="p-name">Buydepa</div>
+        <p class="p-desc">iBuying platform for used apartments in Chile. We buy, renovate, and resell — bringing liquidity to a traditionally slow market. Listed on the Santiago Stock Exchange via ScaleX.</p>
+        <div class="p-status"><span class="dot on"></span> Active · Public company</div>
+      </div>
+      <div class="p-card">
+        <span class="p-tag">Fintech</span>
+        <div class="p-name">Forpay</div>
+        <p class="p-desc">B2B recurring payments platform for LatAm. Automated collections, smart retry logic, and real-time reconciliation for companies that bill their clients monthly.</p>
+        <div class="p-status"><span class="dot on"></span> Active · Series A</div>
+      </div>
+      <div class="p-card">
+        <span class="p-tag">AI · SaaS</span>
+        <div class="p-name">Smooth</div>
+        <p class="p-desc">AI workforce platform for SMBs in LatAm. Deploy autonomous agents that handle repetitive workflows — legal monitoring, collections, document processing — end to end.</p>
+        <div class="p-status"><span class="dot bld"></span> Building · Series A</div>
+      </div>
+      <div class="p-card empty">
+        <div class="plus">+</div>
+        <p>Next company<br>in the studio</p>
+      </div>
+      <div class="p-card empty">
+        <div class="plus">+</div>
+        <p>Next company<br>in the studio</p>
+      </div>
+      <div class="p-card empty">
+        <div class="plus">+</div>
+        <p>Next company<br>in the studio</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section id="partners" style="background: var(--bg); padding-top: 0; padding-bottom: 7rem;">
+  <div style="max-width: 1100px; margin: 0 auto; border-top: 1px solid var(--border); padding-top: 5rem;">
+    <div class="section-label reveal">Technology Partner</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;" class="reveal">
+      <div>
+        <h2 class="section-title" style="margin-bottom: 1rem;">Built on top of Andevs.</h2>
+        <p class="section-subtitle">Andevs is our dedicated software development partner — the technical execution arm behind the portfolio. From architecture to deployment, they turn product ideas into production-grade software.</p>
+        <div style="display: flex; gap: 2rem; margin-top: 2rem;">
+          <div>
+            <div style="font-family: 'Lora', serif; font-size: 2rem; font-weight: 600; color: var(--terra); line-height: 1;">~25%</div>
+            <div style="font-size: 0.8rem; color: var(--text-3); margin-top: 0.3rem; letter-spacing: 0.04em;">Stake held by Lucky</div>
+          </div>
+          <div style="width: 1px; background: var(--border);"></div>
+          <div>
+            <div style="font-family: 'Lora', serif; font-size: 2rem; font-weight: 600; color: var(--terra); line-height: 1;">5+</div>
+            <div style="font-size: 0.8rem; color: var(--text-3); margin-top: 0.3rem; letter-spacing: 0.04em;">Portfolio products shipped</div>
+          </div>
+        </div>
+      </div>
+      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 2.2rem; position: relative; overflow: hidden;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--terra) 0%, transparent 100%);"></div>
+        <div style="font-size: 0.67rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 1.2rem;">What Andevs builds for Lucky</div>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.9rem;">
+          <li style="display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.88rem; color: var(--text-2); line-height: 1.6;"><span style="color: var(--terra); flex-shrink: 0;">→</span> Full-stack product development for portfolio companies</li>
+          <li style="display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.88rem; color: var(--text-2); line-height: 1.6;"><span style="color: var(--terra); flex-shrink: 0;">→</span> Infrastructure, APIs, and integrations</li>
+          <li style="display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.88rem; color: var(--text-2); line-height: 1.6;"><span style="color: var(--terra); flex-shrink: 0;">→</span> AI agent implementation for Smooth</li>
+          <li style="display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.88rem; color: var(--text-2); line-height: 1.6;"><span style="color: var(--terra); flex-shrink: 0;">→</span> External client projects that fund the operation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="team">
+  <div class="team-inner">
+    <div class="team-header">
+      <div class="section-label reveal">The Founders</div>
+      <h2 class="section-title reveal">People who build,<br>not just back.</h2>
+      <p class="section-subtitle reveal">We're operators first. Each founder at Lucky runs one or more companies hands-on — from product strategy to late-night deploys.</p>
+    </div>
+    <div class="team-grid">
+      <div class="t-card reveal">
+        <div class="t-avatar">P</div>
+        <div class="t-name">Pablo Ruiz-Tagle</div>
+        <div class="t-role">Founder</div>
+        <p class="t-bio">Serial company builder with ventures across proptech, fintech, and AI. Leads Buydepa as COO, co-created Smooth, and founded Lucky as the structure to keep building.</p>
+      </div>
+      <div class="t-card reveal">
+        <div class="t-avatar">A</div>
+        <div class="t-name">Agustín Correa</div>
+        <div class="t-role">Founder</div>
+        <p class="t-bio">Co-founder and CEO of Forpay, the B2B recurring payments platform transforming how companies collect in LatAm. Operator-first founder with deep expertise in fintech and growth.</p>
+      </div>
+      <div class="t-card empty reveal">
+        <div class="plus">+</div>
+        <p>More founders joining</p>
+      </div>
+    </div>
+    <div class="manifesto reveal">
+      <p class="manifesto-q">"The more I practice,<br>the luckier I get."</p>
+      <span class="manifesto-cite">— Gary Player · The Lucky Founders</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">The <span>Lucky</span> Founders</div>
+  <span class="footer-copy">© 2025 Lucky SpA · Santiago, Chile</span>
+  <ul class="footer-links">
+    <li><a href="#about">Studio</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const siblings = [...entry.target.parentElement.querySelectorAll('.reveal:not(.visible)')];
+        const idx = siblings.indexOf(entry.target);
+        setTimeout(() => entry.target.classList.add('visible'), idx * 90);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
